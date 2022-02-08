@@ -74,6 +74,11 @@ const regex = /[1-3]/;
 let pokeAd;
 let vidaDoAlea;
 let att;
+const pokeAleatorio = (nome, vida, dano) => {
+    pokeAd = nome;
+    vidaDoAlea = vida;
+    ataqueDele = dano;
+};
 const validade = a => {
     while (!regex.test(a)) {
         console.log('Escolha um dos 3!');
@@ -169,7 +174,7 @@ function luta() {
         if (vidaDoAlea <= 0) {
             console.log(pokeAd.toUpperCase(), 'MORREU');
             if (vidaDoAlea <= 0) {
-                status.levelup();
+                status.levelup(1);
             }
             break;
         }
@@ -270,20 +275,28 @@ while (jornada == 2) {
 }
 if (jornada == 1) {
     console.clear();
-    console.log(`
-Durante sua caminhada você encontra uma treinadora pokemon...
---------------------------------------------------------
-*ELA CORRE EM SUA DIREÇÃO E FALA COM VOCÊ*
-PRINCESS JOANA: OLÁ... MEU NOME É JOANA, EU ESTAVA TREINANDO MEU CLEFABLE 
-AQUI PERTO E ELE FICOU COM MEDO E FUGIU PARA AS MONTANHAS, EU ESTAVA PROCURANDO
-UM TREINADOR POKEMON QUE PUDESSE ME AJUDAR CONHECE ALGUM? 
-
-*NOTA:ELA NÃO SABE QUE VOCÊ É UM TREINADOR POKEMON*
------------------------DIALOGO-------------------------------
-1 - "EU SOU UM TREINADOR POKÉMON E POSSO TE AJUDAR"
-2 - *MENTIR* "AH... NÃO CONHEÇO NENHUM TREINADOR POKEMON POR PERTO"
-3 - IGNORAR
-`);
+    console.log(
+        `Durante sua caminhada você encontra uma treinadora pokemon...`,
+    );
+    console.log(`--------------------------------------------------------`);
+    console.log(`*ELA CORRE EM SUA DIREÇÃO E FALA COM VOCÊ*`);
+    console.log(
+        `PRINCESS JOANA: OLÁ... MEU NOME É JOANA, EU ESTAVA TREINANDO MEU CLEFABLE`,
+    );
+    console.log(
+        `AQUI PERTO E ELE FICOU COM MEDO E FUGIU PARA AS MONTANHAS, EU ESTAVA PROCURANDO`,
+    );
+    console.log(`UM TREINADOR POKEMON QUE PUDESSE ME AJUDAR CONHECE ALGUM?`);
+    console.log();
+    console.log(`*NOTA:ELA NÃO SABE QUE VOCÊ É UM TREINADOR POKEMON*`);
+    console.log(
+        `-----------------------DIALOGO-------------------------------`,
+    );
+    console.log(`1 - "EU SOU UM TREINADOR POKÉMON E POSSO TE AJUDAR"`);
+    console.log(
+        `2 - *MENTIR* "AH... NÃO CONHEÇO NENHUM TREINADOR POKEMON POR PERTO"`,
+    );
+    console.log(`3 - IGNORAR`);
     let plau = +prompt('RESPOSTA:');
     validade(plau);
     if (plau == 3) {
@@ -339,9 +352,7 @@ UM TREINADOR POKEMON QUE PUDESSE ME AJUDAR CONHECE ALGUM?
                 status.gethp(status.maxHp);
                 console.log('VOCÊ TERÁ QUE ME VENCER CONTRA MIN PRA PASSAR');
                 varl = 3;
-                pokeAd = 'Camerupt';
-                vidaDoAlea = 15;
-                ataqueDele = 3;
+                pokeAleatorio('Camerupt', 15, 3);
                 luta();
                 if (vidaDoAlea != 0) {
                     status.azar(0, 10, 1);
@@ -377,9 +388,7 @@ UM TREINADOR POKEMON QUE PUDESSE ME AJUDAR CONHECE ALGUM?
             }
             if (furtividade < 2) {
                 varl = 3;
-                vidaDoAlea = 55;
-                pokeAd = 'Onix';
-                ataqueDele = 10;
+                pokeAleatorio('Onix', 50, 10);
                 luta();
                 if (vidaDoAlea != 0) {
                     Viridian + 150;
@@ -401,7 +410,7 @@ UM TREINADOR POKEMON QUE PUDESSE ME AJUDAR CONHECE ALGUM?
         console.log(`*ELA TE DA UMA FRUTA E SAI CORRENDO*`);
         console.log(`*VOCÊ DECIDE COMER ESSA FRUTA QUE PARECE DELICIOSA*`);
         status.gethp(status.maxHp);
-        relogio.tempo(1)
+        relogio.tempo(1);
         console.log(`SE PASSA UMA HORA ENQUANTO VOCÊ PROCURA ESSE CLEFABLE`);
         console.log(`ANDANDO POR UMA CAVERNA ESCURA VOCÊ NÃO PODE VER DIREITO`);
         console.log(`VOCÊ OLHA PARA O CANTO DA CAVERNA E VE UM PASSÁRO...`);
@@ -412,16 +421,35 @@ UM TREINADOR POKEMON QUE PUDESSE ME AJUDAR CONHECE ALGUM?
         vaz = prompt('*O PASSARO VERMELHO TE PERCEBE*');
         console.clear();
         console.log('ELE VAI EMBORA E VOCÊ SEGUE O CAMINHO NA CAVERNA');
-        console.log()
+        console.log('VOCÊ CONSEGUE VER UMA BOLA ROSA NO FUNDO DA CAVERNA');
+        console.log('ELE ESTA SENDO ATACADO POR UM GRUPO DE POKEMONS');
+        console.log('*SEU PASSO FAZ BARULHO EM UMA PEDRA E ELES TE PERCEBEM*');
+        console.log('3 ZUBATS VÃO EM TUA DIREÇÃO E VOCÊ TEM QUE LUTAR CONTRA ELES');
+        pokeAleatorio('ZUBAT', 25, 5);
+        for(let i = 0; i < 3; i++){
+            luta();
+        }
     }
     if (plau == 2) {
-        console.log(`${status.nome.toUpperCase()}: AH... NÃO CONHEÇO NENHUM TREINADOR POKEMON POR PERTO`);
-        console.log('PRINCESS JOANA: OBRIGADA DE QUALQUER FORMA! CUIDADO NA VIAGEM!!');
-        console.log(`-----------------------------------------------------------------`);
-        console.log(`VOCÊ SEGUE EM FRENTE E PERCEBE QUE DURANTE O CAMINHO PASSOU UM`); 
-        console.log(`POKEMON DE GRANDE PORTE PELO MESMO CAMINHO QUE VOCÊ E QUE VOCÊ O EVITOU`);
+        console.log(
+            `${status.nome.toUpperCase()}: AH... NÃO CONHEÇO NENHUM TREINADOR POKEMON POR PERTO`,
+        );
+        console.log(
+            'PRINCESS JOANA: OBRIGADA DE QUALQUER FORMA! CUIDADO NA VIAGEM!!',
+        );
+        console.log(
+            `-----------------------------------------------------------------`,
+        );
+        console.log(
+            `VOCÊ SEGUE EM FRENTE E PERCEBE QUE DURANTE O CAMINHO PASSOU UM`,
+        );
+        console.log(
+            `POKEMON DE GRANDE PORTE PELO MESMO CAMINHO QUE VOCÊ E QUE VOCÊ O EVITOU`,
+        );
         console.log(`POR POUCO CONVERSANDO COM A PRINCESS JOANA...`);
-        console.log(`--------------------------------------------------------------------------`);
+        console.log(
+            `--------------------------------------------------------------------------`,
+        );
     }
 }
 console.clear();
@@ -434,32 +462,40 @@ console.log(`VOCÊ PARECE UM TREINADOR POKEMON...`);
 console.log(`ESTÁ INDO PARA VIRIDIAN LUTAR CONTRA O LIDER DE GINÁSIO ?`);
 console.log();
 console.log(`1 - "SIM ESTOU INDO PARA LÁ"`);
-console.log(`2 - "PRECISO FICAR MAIS FORTE PARA LUTAR CONTRA O LIDER DE GINÁSIO!"`);
+console.log(
+    `2 - "PRECISO FICAR MAIS FORTE PARA LUTAR CONTRA O LIDER DE GINÁSIO!"`,
+);
 console.log(`3 - FICAR EM SILÊNCIO...`);
 let plou = +prompt('RESPOSTA: ');
 RESPOSTA.push(plou);
 if (plou == 2) {
     console.log('ENTÃO IRÁ LUTAR CONTRA MIN!');
-    vidaDoAlea = 30;
-    pokeAd = 'GRAVELER';
-    ataqueDele = 5;
+    pokeAleatorio('GRAVELER', 30, 5);
     varl = 0;
     luta();
     if (vidaDoAlea != 0) {
         Viridian + 150;
         x - 150;
         status.azar(0, 30, 0);
-        console.log(status);
+        status.bio();
     }
 }
 if (plou != 2) {
-    console.log(`VELHO DIAN: ACHO QUE VOCÊ DEVE IR ENTÃO... NÃO TE ATRASAREI MAIS...`);
+    console.log(
+        `VELHO DIAN: ACHO QUE VOCÊ DEVE IR ENTÃO... NÃO TE ATRASAREI MAIS...`,
+    );
     console.log(`*SEU POKEMON DESCANSA UM POUCO*`);
 }
 console.log(`*SE PASSA UMA HORA DURANTE SEU CAMINHO*`);
-console.log(`*VOCÊ SEGUE EM FRENTE SUA JORNADA E TEM QUE PASSAR PELO MATO PARA*`);
-console.log(`*PODER ATRAVESSAR A PONTE QUE HÁ LOGO A FRENTE E SEGUIR SEU CAMINHO*`);
-console.log(`NOTA:VOCÊ DEVE AUMENTAR O LEVEL DO SEU POKEMON PARA PASSAR PELOS DESAFIOS...`);
+console.log(
+    `*VOCÊ SEGUE EM FRENTE SUA JORNADA E TEM QUE PASSAR PELO MATO PARA*`,
+);
+console.log(
+    `*PODER ATRAVESSAR A PONTE QUE HÁ LOGO A FRENTE E SEGUIR SEU CAMINHO*`,
+);
+console.log(
+    `NOTA:VOCÊ DEVE AUMENTAR O LEVEL DO SEU POKEMON PARA PASSAR PELOS DESAFIOS...`,
+);
 vaz = prompt('');
 relogio.tempo(1);
 relogio.reloginho();
