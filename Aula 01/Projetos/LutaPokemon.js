@@ -17,6 +17,14 @@ let status = {
     pokemon: '',
     xp: 0,
     missão: '',
+    bio: function () {
+        console.log(`----------------STATUS--------------------`);
+        console.log(`A VIDA DO POKEMON É: ${this.vidaDoPokemon}`);
+        console.log(`SEU LEVEL É: ${this.Level}`);
+        console.log(`VOCÊ TEM: ${this.ienes} IENES`);
+        console.log(`SEU XP É: ${this.xp}`);
+        console.log(`------------------------------------------`);
+    },
     azar: function (vida, dinheiro, xp) {
         this.vidaDoPokemon -= vida * status.Level;
         this.ienes -= dinheiro * status.Level;
@@ -28,35 +36,36 @@ let status = {
         }
         return status.vidaDoPokemon;
     },
-    levelup: function () {
-        this.xp++;
+    levelup: function (a) {
+        this.xp += a;
         this.ienes += 10;
-        if (status.xp == 3) {
+        if (status.xp == 3 * this.Level) {
             this.Level++;
             this.xp = 0;
             this.maxHp *= status.Level;
         }
     },
 };
-let relogio = {
+const relogio = {
     Hora: 6,
     Dia: 1,
-    tempo: numero => {
-        relogio.Hora += numero;
+    tempo: function (numero) {
+        this.Hora += numero;
         if (relogio.Hora > 23) {
-            let vari = relogio.Hora - 24;
-            relogio.Hora = 0;
-            relogio.Hora += vari;
-            relogio.Dia++;
+            let vari = this.Hora - 24;
+            this.Hora = 0;
+            this.Hora += vari;
+            this.Dia++;
         }
-        return relogio.Hora, relogio.Dia;
+        return this.Hora, this.Dia;
     },
-    reloginho: () =>
+    reloginho: function () {
         console.log(`
-________________________
-Dia:${relogio.Dia}
-Hora: ${relogio.Hora}hrs
-________________________`),
+------------------------
+Dia:${this.Dia}
+Hora:${this.Hora}hrs
+------------------------`);
+    },
 };
 const pokeInicial = ['Bulbassauro', 'Charmander', 'Squirtle'];
 const poke = ['Caterpie', 'Ratata', 'Metapod', 'Beedril', 'Ekans'];
@@ -125,13 +134,13 @@ function Jornada() {
     if (jornada == 2) {
         console.clear();
         while (varl != 1 && varl != 2) {
-            console.log(`GRAMA CLARA OU ESCURA?
-        1 - CLARA
-        2 - ESCURA`);
+            console.log('EM QUAL TIPO DE GRAMA QUER IR?');
+            console.log('1 - GRAMA CLARA');
+            console.log('2 - GRAMA ESCURA');
             varl = +prompt('RESPOSTA: ');
         }
         mato();
-        console.log(status);
+        status.bio();
     }
 }
 function luta() {
@@ -144,7 +153,7 @@ function luta() {
             if (status.xp > 0) {
                 status.azar(0, 0, 1);
             }
-            console.log(status);
+            status.bio();
             Jornada();
             break;
         }
@@ -196,10 +205,8 @@ function mato() {
     let mato = prompt('*VOCÊ ESTÁ ANDANDO NO MATO*');
     console.log(`--------APARECE UM`, pokeAd.toUpperCase(), `-------`);
     console.log(`*VOCÊ INVOCA SEU`, escolha.toUpperCase(), `*`);
-    console.log(`
-| FUGIR  |
-| ATACAR |
-`);
+    console.log('| FUGIR  |');
+    console.log('| ATACAR |');
     EscolhaLuta = prompt(`O que quer fazer: `);
     validação2();
     if (EscolhaLuta.toLowerCase() == 'fugir') {
@@ -214,9 +221,8 @@ function validação2() {
         EscolhaLuta.toLowerCase() != 'atacar'
     ) {
         console.log('VOCÊ PRECISA ESCOLHER UM DOS DOIS');
-        console.log(`
-  | FUGIR  |
-  | ATACAR |`);
+        console.log('| FUGIR  |');
+        console.log('| ATACAR |');
         console.log();
         EscolhaLuta = prompt(`O que quer fazer: `);
     }
@@ -232,11 +238,9 @@ console.log('PROF.CARVALHO: QUER ESCOLHER SEU POKEMON INICIAL?');
 vaz = prompt('APERTE ENTER PARA ESCOLHER....');
 console.clear();
 console.log(`---------Pokemon Inicial-----------`);
-console.log(`
-1 - ${pokeInicial[0]}
-2 - ${pokeInicial[1]}
-3 - ${pokeInicial[2]}
-`);
+console.log(`1 - ${pokeInicial[0]}`);
+console.log(`2 - ${pokeInicial[1]}`);
+console.log(`3 - ${pokeInicial[2]}`);
 console.log();
 alvo = +prompt('RESPOSTA: ');
 validade(alvo);
@@ -311,17 +315,23 @@ UM TREINADOR POKEMON QUE PUDESSE ME AJUDAR CONHECE ALGUM?
         console.clear();
         relogio.tempo(1);
         relogio.reloginho();
-        console.log(`
-VOCÊ COMEÇA SUA BUSCA PELO CLEFABLE...
-VOCÊ COMEÇA A ANDAR PELAS MONTANHAS PASSANDO POR VARIOS POKEMONS
-NO SEU CAMINHO VOCÊ CONSEGUE VER MATO, UM TREINADOR POKEMON E UM ONIX
-E VOCÊ SE ENCONTRA ENTRE 3 CAMINHOS.
---------------------------------------------------------------------------
-1-PASSAR PELO PELO MATO E EVITAR O TREINADOR
-2-IR DE ENCONTRO COM O TREINADOR POKEMON
-3-TENTAR PASSAR DESPERCEBIDO PELO ONIX
---------------------------------------------------------------------------
-        `);
+        console.log(`VOCÊ COMEÇA SUA BUSCA PELO CLEFABLE...`);
+        console.log(
+            `VOCÊ COMEÇA A ANDAR PELAS MONTANHAS PASSANDO POR VARIOS POKEMONS`,
+        );
+        console.log(
+            `NO SEU CAMINHO VOCÊ CONSEGUE VER MATO, UM TREINADOR POKEMON E UM ONIX`,
+        );
+        console.log(`E VOCÊ SE ENCONTRA ENTRE 3 CAMINHOS.`);
+        console.log(
+            `--------------------------------------------------------------------------`,
+        );
+        console.log(`1-PASSAR PELO PELO MATO E EVITAR O TREINADOR`);
+        console.log(`2-IR DE ENCONTRO COM O TREINADOR POKEMON`);
+        console.log(`3-TENTAR PASSAR DESPERCEBIDO PELO ONIX`);
+        console.log(
+            `--------------------------------------------------------------------------`,
+        );
         let iscolha = +prompt('RESPOSTA:');
         validade(iscolha);
         if (iscolha == 2) {
@@ -391,36 +401,41 @@ E VOCÊ SE ENCONTRA ENTRE 3 CAMINHOS.
         console.log(`*ELA TE DA UMA FRUTA E SAI CORRENDO*`);
         console.log(`*VOCÊ DECIDE COMER ESSA FRUTA QUE PARECE DELICIOSA*`);
         status.gethp(status.maxHp);
+        relogio.tempo(1)
+        console.log(`SE PASSA UMA HORA ENQUANTO VOCÊ PROCURA ESSE CLEFABLE`);
+        console.log(`ANDANDO POR UMA CAVERNA ESCURA VOCÊ NÃO PODE VER DIREITO`);
+        console.log(`VOCÊ OLHA PARA O CANTO DA CAVERNA E VE UM PASSÁRO...`);
+        vaz = prompt('*ESSE PASSARO FAZ UM BARULHO ESTRANHO....*');
+        console.clear();
+        console.log('O PASSARO: WUEWUEWUEWUEWUE');
+        console.log('VOCÊ PERCEBE QUE É UM PASSARO VERMELHO...');
+        vaz = prompt('*O PASSARO VERMELHO TE PERCEBE*');
+        console.clear();
+        console.log('ELE VAI EMBORA E VOCÊ SEGUE O CAMINHO NA CAVERNA');
+        console.log()
     }
     if (plau == 2) {
-        console.log(
-            `${status.nome.toUpperCase()}: AH... NÃO CONHEÇO NENHUM TREINADOR POKEMON POR PERTO`,
-        );
-        console.log(
-            'PRINCESS JOANA: OBRIGADA DE QUALQUER FORMA! CUIDADO NA VIAGEM!!',
-        );
-        console.log(`-----------------------------------------------------------------
-        VOCÊ SEGUE EM FRENTE E PERCEBE QUE DURANTE O CAMINHO PASSOU UM 
-        POKEMON DE GRANDE PORTE PELO MESMO CAMINHO QUE VOCÊ E QUE VOCÊ O EVITOU
-        POR POUCO CONVERSANDO COM A PRINCESS JOANA...
-        ---------------------------------------------------------------------------
-        `);
+        console.log(`${status.nome.toUpperCase()}: AH... NÃO CONHEÇO NENHUM TREINADOR POKEMON POR PERTO`);
+        console.log('PRINCESS JOANA: OBRIGADA DE QUALQUER FORMA! CUIDADO NA VIAGEM!!');
+        console.log(`-----------------------------------------------------------------`);
+        console.log(`VOCÊ SEGUE EM FRENTE E PERCEBE QUE DURANTE O CAMINHO PASSOU UM`); 
+        console.log(`POKEMON DE GRANDE PORTE PELO MESMO CAMINHO QUE VOCÊ E QUE VOCÊ O EVITOU`);
+        console.log(`POR POUCO CONVERSANDO COM A PRINCESS JOANA...`);
+        console.log(`--------------------------------------------------------------------------`);
     }
 }
 console.clear();
 relogio.reloginho();
-console.log(`
-*UM CAÇADOR COM UMA ARMA TE ACOLHE ELE DIZ SEU NOME*
-VELHO DIAN: O QUE ESTÁ FAZENDO POR AQUI? EXISTEM MUITOS POKEMONS
-PERIGOSOS POR AQUI, A NATUREZA DAQUI É SELVAGEM
-*O VELHO OLHA PARA VOCÊ E FAZ UMA CARA ESTRANHA*
-VOCÊ PARECE UM TREINADOR POKEMON...
-ESTÁ INDO PARA VIRIDIAN LUTAR CONTRA O LIDER DE GINÁSIO ?
-
-1 - "SIM ESTOU INDO PARA LÁ"
-2 - "PRECISO FICAR MAIS FORTE PARA LUTAR CONTRA O LIDER DE GINÁSIO!"
-3 - FICAR EM SILÊNCIO...
-`);
+console.log(`*UM CAÇADOR COM UMA ARMA TE ACOLHE ELE DIZ SEU NOME*`);
+console.log(`VELHO DIAN: O QUE ESTÁ FAZENDO POR AQUI? EXISTEM MUITOS POKEMONS`);
+console.log(`PERIGOSOS POR AQUI, A NATUREZA DAQUI É SELVAGEM`);
+console.log(`*O VELHO OLHA PARA VOCÊ E FAZ UMA CARA ESTRANHA*`);
+console.log(`VOCÊ PARECE UM TREINADOR POKEMON...`);
+console.log(`ESTÁ INDO PARA VIRIDIAN LUTAR CONTRA O LIDER DE GINÁSIO ?`);
+console.log();
+console.log(`1 - "SIM ESTOU INDO PARA LÁ"`);
+console.log(`2 - "PRECISO FICAR MAIS FORTE PARA LUTAR CONTRA O LIDER DE GINÁSIO!"`);
+console.log(`3 - FICAR EM SILÊNCIO...`);
 let plou = +prompt('RESPOSTA: ');
 RESPOSTA.push(plou);
 if (plou == 2) {
@@ -438,17 +453,14 @@ if (plou == 2) {
     }
 }
 if (plou != 2) {
-    console.log(`
-    VELHO DIAN: ACHO QUE VOCÊ DEVE IR ENTÃO... NÃO TE ATRASAREI MAIS...
-    *SEU POKEMON DESCANSA UM POUCO*
-    `);
+    console.log(`VELHO DIAN: ACHO QUE VOCÊ DEVE IR ENTÃO... NÃO TE ATRASAREI MAIS...`);
+    console.log(`*SEU POKEMON DESCANSA UM POUCO*`);
 }
-console.log(`
-*SE PASSA UMA HORA DURANTE SEU CAMINHO*
-*VOCÊ SEGUE EM FRENTE SUA JORNADA E TEM QUE PASSAR PELO MATO PARA*
-*PODER ATRAVESSAR A PONTE QUE HÁ LOGO A FRENTE E SEGUIR SEU CAMINHO*
-NOTA:VOCÊ DEVE AUMENTAR O LEVEL DO SEU POKEMON PARA PASSAR PELOS DESAFIOS...
-`);
+console.log(`*SE PASSA UMA HORA DURANTE SEU CAMINHO*`);
+console.log(`*VOCÊ SEGUE EM FRENTE SUA JORNADA E TEM QUE PASSAR PELO MATO PARA*`);
+console.log(`*PODER ATRAVESSAR A PONTE QUE HÁ LOGO A FRENTE E SEGUIR SEU CAMINHO*`);
+console.log(`NOTA:VOCÊ DEVE AUMENTAR O LEVEL DO SEU POKEMON PARA PASSAR PELOS DESAFIOS...`);
+vaz = prompt('');
 relogio.tempo(1);
 relogio.reloginho();
 for (let i = 0; i < 3; i++) {
@@ -456,4 +468,4 @@ for (let i = 0; i < 3; i++) {
     mato();
     console.clear();
 }
-console.log(status);
+status.bio();
