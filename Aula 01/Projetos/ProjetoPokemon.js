@@ -1,4 +1,5 @@
 var prompt = require('prompt-sync')();
+// Variáveis base e arrays do jogo
 let ataqueDele;
 let jornada;
 let trajeto;
@@ -15,12 +16,14 @@ const lider = /[1-2]/;
 let pokeAd;
 let vidaDoAlea;
 let att;
-let recomeço;
+let recomeço = '';
+// Função para criar pokemons inimigos
 const pokeAleatorio = (nome, vida, dano) => {
     pokeAd = nome;
     vidaDoAlea = vida;
     ataqueDele = dano;
 };
+// Função para validar uma resposta de 1 a 3
 const validade = a => {
     while (!regex.test(a)) {
         console.log('Escolha um dos 3!');
@@ -28,41 +31,42 @@ const validade = a => {
     }
     return a;
 };
+// Variação de ataque com base na evolução do pokemon
 const ataque = a => {
-    if (status.evolution == 1) {
-        if (a == 'Bulbasaur') {
-            console.log('BULBASAUR USA CHICOTE DE VINHAS');
-        }
-        if (a == 'Charmander') {
-            console.log('CHARMANDER USA BRASAS');
-        }
-        if (a == 'Squirtle') {
-            console.log('SQUIRTLE USA BOLHAS');
-        }
-    }
-    if (status.evolution == 2) {
-        if (a == 'Ivysaur') {
-            console.log('IVYSAUR USA RAIO SOLAR');
-        }
-        if (a == 'Charmeleon') {
-            console.log('CHARMELEON USA LANÇA CHAMAS');
-        }
-        if (a == 'Wartortle') {
-            console.log("WARTORTLE USA PISTOLA D'ÀGUA");
-        }
-    }
-    if (status.evolution == 3) {
-        if (a == 'Venusaur') {
-            console.log('VENUSAUR USA TEMPESTADE DE PETALAS');
-        }
-        if (a == 'Charizard') {
-            console.log('CHARIZARD USA SUPERAQUECER');
-        }
-        if (a == 'Blastoise') {
-            console.log('BLASTOISE USA BOMBA HIDRÁULICA');
-        }
+    switch (status.evolution) {
+        case 1:
+            switch (a) {
+                case 'Squirtle':
+                    return console.log('SQUIRTLE USA BOLHAS');
+                case 'Bulbasaur':
+                    return console.log('BULBASAUR USA CHICOTE DE VINHAS');
+                case 'Charmander':
+                    return console.log('CHARMANDER USA BRASAS');
+            }
+            break;
+        case 2:
+            switch (a) {
+                case 'Wartortle':
+                    return console.log("WARTORTLE USA PISTOLA D'ÀGUA");
+                case 'Ivysaur':
+                    return console.log('IVYSAUR USA RAIO SOLAR');
+                case 'Charmeleon':
+                    return console.log('CHARMELEON USA LANÇA CHAMAS');
+            }
+            break;
+        case 3:
+            switch (a) {
+                case 'Blastoise':
+                    return console.log('BLASTOISE USA BOMBA HIDRÁULICA');
+                case 'Venusaur':
+                    return console.log('VENUSAUR USA TEMPESTADE DE PETALAS');
+                case 'Charizard':
+                    return console.log('CHARIZARD USA SUPERAQUECER');
+            }
+            break;    
     }
 };
+// Função para continuidade do jogo
 function Jornada(came) {
     caminhada = came;
     jornada = 0;
@@ -106,6 +110,7 @@ function Jornada(came) {
         status.bio();
     }
 }
+// Função de combate
 function luta() {
     luta: for (let i = 0; i <= vidaDoAlea || i < status.vidaDoPokemon; i++) {
         vaz = prompt('');
@@ -158,6 +163,7 @@ function luta() {
         }
     }
 }
+// Função complementar para combates aleatorios
 function mato() {
     if (varl == 1) {
         ataqueDele = 5;
@@ -180,6 +186,7 @@ function mato() {
         luta();
     }
 }
+// Função de validação para a função anterior
 function validação2() {
     while (
         EscolhaLuta.toLowerCase() != 'fugir' &&
@@ -192,16 +199,26 @@ function validação2() {
         EscolhaLuta = prompt(`O que quer fazer: `);
     }
 }
+// Declaração para objetos
 let relogio;
 let status;
 let caminho;
+//Começo do jogo
 jogo: do {
-    if( recomeço.toLowerCase() == 's' ||
-    recomeço.toLowerCase() == 'ss' ||
-    recomeço.toLowerCase() == 'sim'){
-        console.log('DICA DA IULIA :3 => VOCÊ DEVE COMPLETAR OS DESAFIOS PRINCIPAIS PASSADOS');
-        console.log('PELOS NPC PARA PODER DERROTAR GIOVANNI, ELE É MUITO FORTE!!');
+    //Mensagem para caso você tenha recomeçado o jogo
+    if (
+        recomeço.toLowerCase() == 's' ||
+        recomeço.toLowerCase() == 'ss' ||
+        recomeço.toLowerCase() == 'sim'
+    ) {
+        console.log(
+            'DICA DA IULIA :3 => VOCÊ DEVE COMPLETAR OS DESAFIOS PRINCIPAIS PASSADOS',
+        );
+        console.log(
+            'PELOS NPC PARA PODER DERROTAR GIOVANNI, ELE É MUITO FORTE!!',
+        );
     }
+    // Criação de Objetos
     status = {
         nome: prompt('Qual o nome do seu Personagem? '),
         Level: 1,
@@ -425,7 +442,7 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
         console.log('UM CAÇADOR TE SALVA DO URSARING....');
         console.log();
         status.azar(6, 20, 0);
-        if(status.ienes <= 0){
+        if (status.ienes <= 0) {
             console.log('PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME');
             continue jogo;
         }
@@ -435,6 +452,7 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
     }
     status.gethp(10);
     RESPOSTA.push(princess);
+    // Primeiro desafio do Clefable
     Clefable: while (princess == 1) {
         console.log(
             status.nome.toUpperCase() +
@@ -474,8 +492,10 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
                 luta();
                 if (vidaDoAlea != 0) {
                     status.azar(0, 5, 1);
-                    if(status.ienes <= 0){
-                        console.log('PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME');
+                    if (status.ienes <= 0) {
+                        console.log(
+                            'PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME',
+                        );
                         continue jogo;
                     }
                     vaz = prompt(status);
@@ -515,11 +535,15 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
                 if (vidaDoAlea > 0) {
                     caminho.morte(150);
                     status.azar(0, 10, 1);
-                    if(status.ienes <= 0){
-                        console.log('PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME');
+                    if (status.ienes <= 0) {
+                        console.log(
+                            'PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME',
+                        );
                         continue jogo;
                     }
-                    vaz = prompt('VOCÊ ACABOU SENDO DERROTADO PELO ONIX E REINICIARÁ A MISSÃO')
+                    vaz = prompt(
+                        'VOCÊ ACABOU SENDO DERROTADO PELO ONIX E REINICIARÁ A MISSÃO',
+                    );
                     continue Clefable;
                 }
             }
@@ -631,12 +655,14 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
         pokeAleatorio('GRAVELER', 30, 5);
         varl = 0;
         luta();
-        status.levelup(1,0);
+        status.levelup(1, 0);
         if (vidaDoAlea > 0) {
             caminho.morte(150);
             status.azar(0, 10, 1);
-            if(status.ienes <= 0){
-                console.log('PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME');
+            if (status.ienes <= 0) {
+                console.log(
+                    'PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME',
+                );
                 continue jogo;
             }
             status.bio();
@@ -688,12 +714,13 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
     if (vila == 2) {
         console.log('*UM POKEMON PASSA CORRENDO E MACHUCA VOCÊ E SEU POKEMON*');
         status.azar(5, 50, 1);
-        if(status.ienes <= 0){
+        if (status.ienes <= 0) {
             console.log('PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME');
             continue jogo;
         }
         status.bio();
     }
+    // Segundo desafio contra o snorlax
     vilar: while (vila == 1 || vila == 3) {
         console.log('*ALGUÉM QUE PARECE O CHEFE DA VIDA FALA*');
         console.log('DEPOIS DAQUELE PROBLEMA COM AQUELE POKEMON....');
@@ -717,8 +744,10 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
             );
             console.log('CHEFE: ENTÃO NÃO ATRAPALHE!!!');
             status.azar(0, 15, 0);
-            if(status.ienes <= 0){
-                console.log('PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME');
+            if (status.ienes <= 0) {
+                console.log(
+                    'PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME',
+                );
                 continue jogo;
             }
             status.bio();
@@ -813,8 +842,10 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
                     } DE IENES VOCÊ GANHOU 3 DE XP*`,
                 );
                 status.azar(0, 12, 0);
-                if(status.ienes <= 0){
-                    console.log('PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME');
+                if (status.ienes <= 0) {
+                    console.log(
+                        'PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME',
+                    );
                     continue jogo;
                 }
                 status.levelup(3, 0);
@@ -870,8 +901,10 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
                 'E VOCÊ TEM QUE GASTAR SEUS IENES PARA CURÁ-LO DO ENVENENAMENTO',
             );
             status.azar(3, 10, 0);
-            if(status.ienes <= 0){
-                console.log('PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME');
+            if (status.ienes <= 0) {
+                console.log(
+                    'PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME',
+                );
                 continue jogo;
             }
             status.bio();
@@ -904,7 +937,9 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
             varl = 3;
             luta();
             if (vidaDoAlea > 0) {
-                vaz = prompt('VOCÊ ACABOU SENDO DERROTADO PELO SNORLAX E REINICIARÁ A MISSÃO')
+                vaz = prompt(
+                    'VOCÊ ACABOU SENDO DERROTADO PELO SNORLAX E REINICIARÁ A MISSÃO',
+                );
                 continue vilar;
             }
         }
@@ -941,8 +976,10 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
                 if (vidaDoAlea > 0) {
                     caminho.morte(150);
                     status.azar(0, 15, 1);
-                    if(status.ienes <= 0){
-                        console.log('PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME');
+                    if (status.ienes <= 0) {
+                        console.log(
+                            'PARECE QUE VOCÊ FICOU SEM DINHEIRO E MORREU DE FOME',
+                        );
                         continue jogo;
                     }
                     continue vilar;
@@ -988,7 +1025,11 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
             status.levelup(2);
         }
     }
-    if(status.pokemon == 'Venusaur' || status.pokemon == 'Charizard' || status.pokemon == 'Blastoise'){
+    if (
+        status.pokemon == 'Venusaur' ||
+        status.pokemon == 'Charizard' ||
+        status.pokemon == 'Blastoise'
+    ) {
         status.maxHp = 1500;
     }
     status.gethp(status.maxHp);
@@ -1011,12 +1052,12 @@ ADVERSÁRIOS COMO VOCÊ E DERROTAR O CAMPEÃO DA LIGA POKEMON`);
     recomeço.toLowerCase() == 'ss' ||
     recomeço.toLowerCase() == 'sim'
 );
-console.log('------------------------------------------------------')
+console.log('------------------------------------------------------');
 vaz = prompt('ESSE É O FINAL DO JOGO');
 console.log('VOCÊ PODE TER DERROTADO OU NÃO O LIDER DE GINÁSIO');
 console.log('ISSO É APENAS UMA DEMO CRIADA POR IULIA');
 console.log('IULIA NO MOMENTO DE CRIAÇÃO DESSE JOGO TEM 18 ANOS');
 console.log('ESPERE ANSIOSO POR UMA CONTINUAÇÃO :)');
 console.log('IULIA FICA FELIZ QUE VOCÊ JOGOU ATÉ AQUI ^^');
-console.log('------------------------------------------------------')
+console.log('------------------------------------------------------');
 vaz = prompt('ADEUS....');
