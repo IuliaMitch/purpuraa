@@ -17,6 +17,8 @@ let pokeAd;
 let vidaDoAlea;
 let att;
 let recomeço = '';
+// Função para adicionar zero a esquerda
+const adicionarZero = (numero) => numero >= 10 || numero < 0 ? numero : `0${numero}`;
 // Função para criar pokemons inimigos
 const pokeAleatorio = (nome, vida, dano) => {
     pokeAd = nome;
@@ -129,12 +131,12 @@ function luta() {
         ataque(status.pokemon);
         att = (Math.trunc(Math.random() * 10) + 5) * status.Level;
         att *= status.evolution;
-        if (att == 15 * status.Level) {
+        if (att == (15 * status.Level) * status.evolution) {
             console.log('CRITICO!');
         }
         vidaDoAlea -= att;
         console.log(pokeAd.toUpperCase(), `TOMA ${att} DE DANO`);
-        console.log('VIDA DO POKEMON INIMIGO:', vidaDoAlea);
+        console.log('VIDA DO POKEMON INIMIGO:', adicionarZero(vidaDoAlea));
         vaz = prompt('enter...');
         if (vidaDoAlea <= 0) {
             console.log(pokeAd.toUpperCase(), 'MORREU');
@@ -147,8 +149,8 @@ function luta() {
         vaz = prompt('enter...');
         status.vidaDoPokemon -= ataqueDele;
         console.clear();
-        console.log('VIDA DO POKEMON INIMIGO:', vidaDoAlea);
-        console.log('VIDA DO SEU POKEMON:', status.vidaDoPokemon);
+        console.log('VIDA DO POKEMON INIMIGO:', adicionarZero(vidaDoAlea));
+        console.log('VIDA DO SEU POKEMON:', adicionarZero(status.vidaDoPokemon));
         if (varl == 1 || varl == 2) {
             console.log(`
 | FUGIR  |
@@ -263,10 +265,10 @@ jogo: do {
         },
         bio: function () {
             console.log(`----------------STATUS--------------------`);
-            console.log(`A VIDA DO POKEMON É: ${this.vidaDoPokemon}`);
-            console.log(`SEU LEVEL É: ${this.Level}`);
+            console.log(`A VIDA DO POKEMON É: ${adicionarZero(this.vidaDoPokemon)}`);
+            console.log(`SEU LEVEL É: ${adicionarZero(this.Level)}`);
             console.log(`VOCÊ TEM: ${this.ienes} IENES`);
-            console.log(`SEU XP É: ${this.xp}`);
+            console.log(`SEU XP É: ${adicionarZero(this.xp)}`);
             console.log(`------------------------------------------`);
         },
         azar: function (vida, dinheiro, xp) {
@@ -283,7 +285,7 @@ jogo: do {
                 status.vidaDoPokemon++
             ) {
                 console.clear();
-                console.log(`VIDA DO POKEMON: ${status.vidaDoPokemon + 1}`);
+                console.log(`VIDA DO POKEMON: ${adicionarZero(status.vidaDoPokemon + 1)}`);
             }
             return status.vidaDoPokemon;
         },
@@ -347,8 +349,8 @@ jogo: do {
                 vaz = prompt('ESTÁ DE MADRUGADA!!');
             }
             console.log(`------------------------`);
-            console.log(`Dia:${this.Dia}`);
-            console.log(`Hora:${this.Hora}hrs`);
+            console.log(`Dia:${adicionarZero(this.Dia)}`);
+            console.log(`Hora:${adicionarZero(this.Hora)}hrs`);
             console.log(`------------------------`);
         },
     };
